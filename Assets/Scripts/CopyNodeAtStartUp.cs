@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CopyNodeAtStartUp : MonoBehaviour
 {
+    public float movingTimeFromLineNodeToTreeNode = 1.0f;
+
     bool initilized = false;
 
     // Use this for initialization
@@ -16,16 +18,23 @@ public class CopyNodeAtStartUp : MonoBehaviour
     {
         if (!initilized)
         {
-            for (int i = 0; i < this.transform.childCount; i++)
+            float startTime = Time.time;
+            for (int index = 0; index < this.transform.childCount; index++)
             {
-                Transform child = this.transform.GetChild(i);
-                int index;
-                if (int.TryParse(child.name, out index))
+                Transform child = this.transform.FindChild(index.ToString());
+                if (child != null)
                 {
                     string name = Names.GetLineNodeName(index);
                     GameObject lineNode = GameObject.Find(name);
                     GameObject treeNode = Instantiate(lineNode) as GameObject;
                     treeNode.name = Names.GetTreeNodeName(index);
+                    MoveFromLineNodeToTreeNode script = treeNode.AddComponent<MoveFromLineNodeToTreeNode>();
+                    script.startTime = startTime;
+                    script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
+                    script.startPosition = lineNode.transform.position;
+                    script.endPosition = child.position;
+
+                    startTime += movingTimeFromLineNodeToTreeNode;
                 }
             }
 

@@ -18,5 +18,10 @@ public class MoveFromLineNodeToTreeNode : MonoBehaviour
     void Update()
     {
         float time = Time.time;
+        if (startTime <= time && time <= endTime)
+        {
+            this.transform.position = Vector3.Lerp(startPosition, endPosition, 
+                (time - startTime) / (endTime - startTime));
+        }
     }
 }
