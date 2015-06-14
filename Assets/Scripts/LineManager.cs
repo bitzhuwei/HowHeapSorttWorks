@@ -9,6 +9,18 @@ public class LineManager : MonoBehaviour {
 	void Start () {
         if (nodePrefab != null)
         {
+            for (int i = 0; i < this.transform.childCount; i++)
+            {
+                Transform child = this.transform.GetChild(i);
+                int index;
+                if (int.TryParse(child.name, out index))
+                {
+                    Transform node = Instantiate(nodePrefab) as Transform;
+                    node.position = child.position;
+                    node.GetComponentInChildren<TextMesh>().text = Random.Range(0, 100).ToString();
+                    node.name = string.Format("line {0}", index);
+                }
+            }
             //for (float i = -9, j = 0; i < 10; i += 1.2f, j++)
             //{
             //    Transform node = Instantiate(nodePrefab) as Transform;
