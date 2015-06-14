@@ -18,7 +18,7 @@ public class LineManager : MonoBehaviour {
                     Transform node = Instantiate(nodePrefab) as Transform;
                     node.position = child.position;
                     node.GetComponentInChildren<TextMesh>().text = Random.Range(0, 100).ToString();
-                    node.name = string.Format("line {0}", index);
+                    node.name = Names.GetLineNodeName(index);
                 }
             }
             //for (float i = -9, j = 0; i < 10; i += 1.2f, j++)
