@@ -9,16 +9,20 @@ public class LineManager : MonoBehaviour {
 	void Start () {
         if (nodePrefab != null)
         {
+            float now = Time.time;
             for (int i = 0; i < this.transform.childCount; i++)
             {
                 Transform child = this.transform.GetChild(i);
                 int index;
                 if (int.TryParse(child.name, out index))
                 {
-                    Transform node = Instantiate(nodePrefab) as Transform;
-                    node.position = child.position;
-                    node.GetComponentInChildren<TextMesh>().text = Random.Range(0, 100).ToString();
-                    node.name = Names.GetLineNodeName(index);
+                    Transform lineNode = Instantiate(nodePrefab) as Transform;
+                    lineNode.position = child.position;
+                    lineNode.GetComponentInChildren<TextMesh>().text = Random.Range(0, 100).ToString();
+                    lineNode.name = Names.GetLineNodeName(index);
+                    lineNode.renderer.enabled = false;
+                    DelayShow script = lineNode.gameObject.AddComponent<DelayShow>();
+                    script.showTime = index / 2f + now;
                 }
             }
             //for (float i = -9, j = 0; i < 10; i += 1.2f, j++)

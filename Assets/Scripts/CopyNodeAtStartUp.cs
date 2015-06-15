@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CopyNodeAtStartUp : MonoBehaviour
 {
-    public float movingTimeFromLineNodeToTreeNode = 1.0f;
+    public float movingTimeFromLineNodeToTreeNode = 0.5f;
 
     bool initilized = false;
 
