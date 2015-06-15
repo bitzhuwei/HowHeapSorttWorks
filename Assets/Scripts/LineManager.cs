@@ -24,6 +24,8 @@ public class LineManager : MonoBehaviour {
                         lineNode.position = child.position;
                         lineNode.GetComponentInChildren<TextMesh>().text = Random.Range(0, 100).ToString();
                         lineNode.name = Names.GetLineNodeName(index);
+                        lineNode.renderer.material = child.renderer.material;
+                        lineNode.GetComponentInChildren<TextMesh>().renderer.enabled = false;
                         lineNode.renderer.enabled = false;
                         DelayShow script = lineNode.gameObject.AddComponent<DelayShow>();
                         script.showTime = index / 2f + now;

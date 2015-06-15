@@ -20,6 +20,7 @@ public class DelayShow : MonoBehaviour
             if (showTime <= Time.time)
             {
                 this.renderer.enabled = true;
+                this.GetComponentInChildren<TextMesh>().renderer.enabled = true;
 
                 done = true;
             }
