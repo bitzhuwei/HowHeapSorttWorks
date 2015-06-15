@@ -18,6 +18,9 @@ public class CopyNodeAtStartUp : MonoBehaviour
     {
         if (!initilized)
         {
+            GameObject managerObj = GameObject.FindGameObjectWithTag(Tags.SortingManager);
+            SortingManager managerScript = managerObj.GetComponent<SortingManager>();
+
             float startTime = Time.time;
             for (int index = 0; index < this.transform.childCount; index++)
             {
@@ -25,7 +28,7 @@ public class CopyNodeAtStartUp : MonoBehaviour
                 if (child != null)
                 {
                     string name = Names.GetLineNodeName(index);
-                    GameObject lineNode = GameObject.Find(name);
+                    GameObject lineNode = managerScript.lineNodePositions[index];// GameObject.Find(name);
                     GameObject treeNode = Instantiate(lineNode) as GameObject;
                     treeNode.name = Names.GetTreeNodeName(index);
                     MoveFromLineNodeToTreeNode script = treeNode.AddComponent<MoveFromLineNodeToTreeNode>();
@@ -35,6 +38,8 @@ public class CopyNodeAtStartUp : MonoBehaviour
                     script.endPosition = child.position;
 
                     startTime += movingTimeFromLineNodeToTreeNode;
+
+                    managerScript.treeNodePositions.Add(treeNode.gameObject);
                 }
             }
 
