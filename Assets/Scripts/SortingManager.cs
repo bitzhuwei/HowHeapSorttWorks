@@ -41,6 +41,17 @@ public class SortingManager : MonoBehaviour
     public void IncreaseStep()
     {
         this.targetStep++;
+        int count = this.targetList.Count;
+
+        if (targetStep <= count / 2 - 1)
+        {
+            int targetIndex = count / 2 - 1 - targetStep;
+            GameObject lineNode = this.lineNodePositions[targetIndex];
+
+            GameObject treeNode = this.treeNodePositions[targetIndex];
+
+        }
+
         StepTypes stepType = GetStepTypes(this.targetStep, this.targetList.Count);
         switch (stepType)
         {
