@@ -8,28 +8,43 @@ public class StepInfo
     internal float passedInterval;
     public float interval = 0.5f;
 
-    public Vector3 targetPosition;
-    public Vector3 childPosition;
     public int targetIndex;
     public int childIndex;
-    public GameObject target;
-    public GameObject child;
 
-    public StepInfo(GameObject target, int targetIndex, GameObject child, int childIndex, StepTypes stepTypes)
+    public Vector3 treeNodeTargetPosition;
+    public Vector3 treeNodeChildPosition;
+    public GameObject treeNodeTarget;
+    public GameObject treeNodeChild;
+
+    public Vector3 lineNodeTargetPosition;
+    public Vector3 lineNodeChildPosition;
+    public GameObject lineNodeTarget;
+    public GameObject lineNodeChild;
+
+    private SortingManager sortingManager;
+
+    public StepInfo(int targetIndex, int childIndex, StepTypes stepTypes, SortingManager sortingManager)
     {
-        this.target = target;
         this.targetIndex = targetIndex;
-        this.child = child;
         this.childIndex = childIndex;
-        this.stepType = stepTypes;
 
-        this.targetPosition = target.transform.position;
-        this.childPosition = child.transform.position;
+        this.treeNodeTarget = sortingManager.treeNodes[targetIndex];
+        this.treeNodeChild = sortingManager.treeNodes[childIndex];
+        this.treeNodeTargetPosition = this.treeNodeTarget.transform.position;
+        this.treeNodeChildPosition = this.treeNodeChild.transform.position;
+
+        this.lineNodeTarget = sortingManager.lineNodes[targetIndex];
+        this.lineNodeChild = sortingManager.lineNodes[childIndex];
+        this.lineNodeTargetPosition = this.lineNodeTarget.transform.position;
+        this.lineNodeChildPosition = this.lineNodeChild.transform.position;
+
+        this.stepType = stepTypes;
     }
+
 
     public override string ToString()
     {
-        return string.Format("{0}: {1}<->{2} in {3}", stepType, target, child, interval);
+        return string.Format("{0}: {1}<->{2} in {3}", stepType, treeNodeTarget, treeNodeChild, interval);
         //return base.ToString();
     }
 }

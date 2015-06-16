@@ -3,6 +3,8 @@ using System.Collections;
 
 public class CopyNodeAtStartUp : MonoBehaviour
 {
+    public GameObject stepButton;
+
     public float movingTimeFromLineNodeToTreeNode = 0.5f;
 
     bool initilized = false;
@@ -42,6 +44,9 @@ public class CopyNodeAtStartUp : MonoBehaviour
                     managerScript.treeNodes.Add(treeNode.gameObject);
                 }
             }
+
+            ShowButtonAtTime showAtTimeScrpt = stepButton.AddComponent<ShowButtonAtTime>();
+            showAtTimeScrpt.showTime = startTime;
 
             initilized = true;
         }
