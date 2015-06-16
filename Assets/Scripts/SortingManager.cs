@@ -68,34 +68,6 @@ public class SortingManager : MonoBehaviour
                 default:
                     break;
             }
-            //GameObject target = stepInfo.target;
-            //GameObject child = stepInfo.child;
-            //stepInfo.passedInterval += Time.deltaTime;
-            //if (target == child) // not need to swap.
-            //{
-            //    Vector3 newPosition = stepInfo.targetPosition;
-            //    newPosition.x += Random.Range(-1, 1);
-            //    newPosition.y += Random.Range(-1, 1);
-            //    newPosition.z += Random.Range(-1, 1);
-            //    target.transform.position = newPosition;
-            //    if (stepInfo.passedInterval >= stepInfo.interval)
-            //    {
-            //        queue.Dequeue();
-            //    }
-            //}
-            //else
-            //{
-            //    target.transform.position = Vector3.Lerp(
-            //        stepInfo.targetPosition, stepInfo.childPosition, stepInfo.passedInterval / stepInfo.interval);
-            //    child.transform.position = Vector3.Lerp(
-            //        stepInfo.childPosition, stepInfo.targetPosition, stepInfo.passedInterval / stepInfo.interval);
-            //    if (stepInfo.passedInterval >= stepInfo.interval)
-            //    {
-            //        int targetIndex = stepInfo.childIndex;
-
-            //        AddStep(targetIndex, StepTypes.BuildSubHeap);
-            //    }
-            //}
         }
     }
 
