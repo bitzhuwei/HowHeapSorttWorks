@@ -120,7 +120,7 @@ public class SortingManager : MonoBehaviour
 
                 int targetIndex = stepInfo.childIndex;
 
-                AddStep(targetIndex, StepTypes.BuildSubHeap);
+                AddStep4BuildSubHeap(targetIndex);
             }
         }
     }
@@ -137,13 +137,13 @@ public class SortingManager : MonoBehaviour
         {
             int targetIndex = count / 2 - 1 - targetStep;
 
-            AddStep(targetIndex, StepTypes.BuildSubHeap);
+            AddStep4BuildSubHeap(targetIndex);
 
         }
 
     }
 
-    private void AddStep(int targetIndex, StepTypes stepType)
+    private void AddStep4BuildSubHeap(int targetIndex)
     {
         System.Collections.Generic.List<int> targetList = this.targetList;
         System.Collections.Generic.List<GameObject> treeNodes = this.treeNodes;
@@ -175,7 +175,7 @@ public class SortingManager : MonoBehaviour
 
         if (targetIndex * 2 + 1 < treeNodes.Count)
         {
-            StepInfo stepInfo = new StepInfo(target, targetIndex, child, childIndex, stepType);
+            StepInfo stepInfo = new StepInfo(target, targetIndex, child, childIndex, StepTypes.BuildSubHeap);
             this.stepQueue.Enqueue(stepInfo);
         }
     }
