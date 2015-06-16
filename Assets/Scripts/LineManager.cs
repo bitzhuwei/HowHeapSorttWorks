@@ -20,9 +20,10 @@ public class LineManager : MonoBehaviour {
                 {
                     if (int.TryParse(child.name, out index))
                     {
+                        int number = Random.Range(0, 100);
                         Transform lineNode = Instantiate(nodePrefab) as Transform;
                         lineNode.position = child.position;
-                        lineNode.GetComponentInChildren<TextMesh>().text = Random.Range(0, 100).ToString();
+                        lineNode.GetComponentInChildren<TextMesh>().text = number.ToString();
                         lineNode.name = Names.GetLineNodeName(index);
                         lineNode.renderer.material = child.renderer.material;
                         lineNode.GetComponentInChildren<TextMesh>().renderer.enabled = false;
@@ -30,6 +31,7 @@ public class LineManager : MonoBehaviour {
                         DelayShow script = lineNode.gameObject.AddComponent<DelayShow>();
                         script.showTime = index / 2f + now;
                         managerScript.lineNodes.Add(lineNode.gameObject);
+                        managerScript.targetList.Add(number);
                     }
                 }
             }
