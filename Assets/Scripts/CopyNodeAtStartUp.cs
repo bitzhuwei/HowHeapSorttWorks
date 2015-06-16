@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// initialize tree nodes.
+/// </summary>
 public class CopyNodeAtStartUp : MonoBehaviour
 {
     public GameObject stepButton;

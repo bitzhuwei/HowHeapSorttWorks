@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Move game object from place to another in specified time.
+/// </summary>
 public class MoveInLine : MonoBehaviour
 {
     public float startTime;

@@ -1,18 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Names 
+/// <summary>
+/// Helps to get line node and tree nodes name in the scene.
+/// </summary>
+public class Names
 {
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
     public static string GetLineNodeName(int index)
     {
         string name = string.Format("line {0}", index);

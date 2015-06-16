@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Hide nodes that provide original positions for moving line nodes and tree nodes.
+/// </summary>
 public class HideNodes : MonoBehaviour
 {
 

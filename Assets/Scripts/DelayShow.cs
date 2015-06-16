@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// Delay for some time to show the game object.
+/// </summary>
 public class DelayShow : MonoBehaviour
 {
     public float showTime;
