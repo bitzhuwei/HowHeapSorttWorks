@@ -4,8 +4,8 @@ using System.Collections;
 public class SortingManager : MonoBehaviour
 {
     public System.Collections.Generic.List<int> targetList;
-    public System.Collections.Generic.List<GameObject> lineNodePositions;
-    public System.Collections.Generic.List<GameObject> treeNodePositions;
+    public System.Collections.Generic.List<GameObject> lineNodes;
+    public System.Collections.Generic.List<GameObject> treeNodes;
 
     int currentStep = -1;
     int targetStep = -1;
@@ -46,9 +46,10 @@ public class SortingManager : MonoBehaviour
         if (targetStep <= count / 2 - 1)
         {
             int targetIndex = count / 2 - 1 - targetStep;
-            GameObject lineNode = this.lineNodePositions[targetIndex];
-
-            GameObject treeNode = this.treeNodePositions[targetIndex];
+            GameObject lineNode = this.lineNodes[targetIndex];
+            //lineNode.AddComponent<TreeNodeSwap>();
+            GameObject treeNode = this.treeNodes[targetIndex];
+            TreeNodeSwap swap = treeNode.AddComponent<TreeNodeSwap>();
 
         }
 

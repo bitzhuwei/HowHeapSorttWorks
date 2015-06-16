@@ -28,10 +28,10 @@ public class CopyNodeAtStartUp : MonoBehaviour
                 if (child != null)
                 {
                     string name = Names.GetLineNodeName(index);
-                    GameObject lineNode = managerScript.lineNodePositions[index];// GameObject.Find(name);
+                    GameObject lineNode = managerScript.lineNodes[index];// GameObject.Find(name);
                     GameObject treeNode = Instantiate(lineNode) as GameObject;
                     treeNode.name = Names.GetTreeNodeName(index);
-                    MoveFromLineNodeToTreeNode script = treeNode.AddComponent<MoveFromLineNodeToTreeNode>();
+                    MoveInLine script = treeNode.AddComponent<MoveInLine>();
                     script.startTime = startTime;
                     script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
                     script.startPosition = lineNode.transform.position;
@@ -39,7 +39,7 @@ public class CopyNodeAtStartUp : MonoBehaviour
 
                     startTime += movingTimeFromLineNodeToTreeNode;
 
-                    managerScript.treeNodePositions.Add(treeNode.gameObject);
+                    managerScript.treeNodes.Add(treeNode.gameObject);
                 }
             }
 

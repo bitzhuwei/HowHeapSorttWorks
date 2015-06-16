@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveFromLineNodeToTreeNode : MonoBehaviour
+public class MoveInLine : MonoBehaviour
 {
     public float startTime;
     public float endTime;

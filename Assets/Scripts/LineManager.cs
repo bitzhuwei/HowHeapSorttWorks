@@ -29,7 +29,7 @@ public class LineManager : MonoBehaviour {
                         lineNode.renderer.enabled = false;
                         DelayShow script = lineNode.gameObject.AddComponent<DelayShow>();
                         script.showTime = index / 2f + now;
-                        managerScript.lineNodePositions.Add(lineNode.gameObject);
+                        managerScript.lineNodes.Add(lineNode.gameObject);
                     }
                 }
             }
