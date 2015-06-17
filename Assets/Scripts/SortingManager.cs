@@ -47,22 +47,60 @@ public class SortingManager : MonoBehaviour
         if (queue.Count > 0)
         {
             StepInfo stepInfo = queue.Peek();
-            switch (stepInfo.stepType)
+
+            stepInfo.passedInterval += Time.deltaTime;
+
+            MoveALittle(stepInfo);
+
+            if (stepInfo.passedInterval >= stepInfo.interval)
             {
-                case StepTypes.Unknown:
-                    break;
-                case StepTypes.Swap:
-                    break;
-                case StepTypes.BuildSubHeap:
-                    break;
-                default:
-                    break;
+                queue.Dequeue();
+
+                switch (stepInfo.stepType)
+                {
+                    case StepTypes.Unknown:
+                        break;
+                    case StepTypes.Swap:
+                        if (stepInfo.targetIndex != stepInfo.childIndex)
+                        {
+                            this.treeNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+                            this.lineNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+                            this.targetList.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+
+                            stepInfo.treeNodeTarget.GetComponentInChildren<TextMesh>().color = new Color(0, 0.5f, 0);
+                        }
+                        else
+                        {
+                            throw new System.Exception("this should not happen.");
+                        }
+                        break;
+                    case StepTypes.BuildSubHeap:
+                        if (stepInfo.targetIndex != stepInfo.childIndex)
+                        {
+                            this.treeNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+                            this.lineNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+                            this.targetList.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+
+                            int targetIndex = stepInfo.childIndex;
+
+                            AddStep4BuildSubHeap(targetIndex);
+                        }
+                        else
+                        {
+                            stepInfo.treeNodeTarget.transform.position = stepInfo.treeNodeTargetPosition;
+                            stepInfo.lineNodeTarget.transform.position = stepInfo.lineNodeTargetPosition;
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
-            Move(stepInfo);
+
+            //Move(stepInfo);
         }
     }
 
-    private void Move(StepInfo stepInfo)
+    private void MoveALittle(StepInfo stepInfo)
     {
         System.Collections.Generic.Queue<StepInfo> queue = this.stepQueue;
 
@@ -71,38 +109,27 @@ public class SortingManager : MonoBehaviour
         GameObject lineNodeTarget = stepInfo.lineNodeTarget;
         GameObject lineNodeChild = stepInfo.lineNodeChild;
 
-        stepInfo.passedInterval += Time.deltaTime;
-
-        if (treeNodeTarget == treeNodeChild) // not need to swap.
+        if (treeNodeTarget == treeNodeChild)
         {
             if (stepInfo.stepType == StepTypes.Swap)
             {
                 throw new System.Exception("this should not happen.");
             }
-            if (stepInfo.passedInterval < stepInfo.interval)
             {
-                {
-                    Vector3 newPosition = stepInfo.treeNodeTargetPosition;
-                    const float range = 0.1f;
-                    newPosition.x += Random.Range(-range, range);
-                    newPosition.y += Random.Range(-range, range);
-                    newPosition.z += Random.Range(-range, range);
-                    treeNodeTarget.transform.position = newPosition;
-                }
-                {
-                    Vector3 newPosition = stepInfo.lineNodeTargetPosition;
-                    const float range = 0.1f;
-                    newPosition.x += Random.Range(-range, range);
-                    newPosition.y += Random.Range(-range, range);
-                    newPosition.z += Random.Range(-range, range);
-                    lineNodeTarget.transform.position = newPosition;
-                }
+                Vector3 newPosition = stepInfo.treeNodeTargetPosition;
+                const float range = 0.1f;
+                newPosition.x += Random.Range(-range, range);
+                newPosition.y += Random.Range(-range, range);
+                newPosition.z += Random.Range(-range, range);
+                treeNodeTarget.transform.position = newPosition;
             }
-            else
             {
-                treeNodeTarget.transform.position = stepInfo.treeNodeTargetPosition;
-                lineNodeTarget.transform.position = stepInfo.lineNodeTargetPosition;
-                queue.Dequeue();
+                Vector3 newPosition = stepInfo.lineNodeTargetPosition;
+                const float range = 0.1f;
+                newPosition.x += Random.Range(-range, range);
+                newPosition.y += Random.Range(-range, range);
+                newPosition.z += Random.Range(-range, range);
+                lineNodeTarget.transform.position = newPosition;
             }
         }
         else
@@ -115,28 +142,84 @@ public class SortingManager : MonoBehaviour
                 stepInfo.lineNodeTargetPosition, stepInfo.lineNodeChildPosition, stepInfo.passedInterval / stepInfo.interval);
             lineNodeChild.transform.position = Vector3.Lerp(
                 stepInfo.lineNodeChildPosition, stepInfo.lineNodeTargetPosition, stepInfo.passedInterval / stepInfo.interval);
-
-            if (stepInfo.passedInterval >= stepInfo.interval)
-            {
-                this.treeNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
-                this.lineNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
-                this.targetList.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
-
-                queue.Dequeue();
-
-                if (stepInfo.stepType == StepTypes.BuildSubHeap)
-                {
-                    int targetIndex = stepInfo.childIndex;
-
-                    AddStep4BuildSubHeap(targetIndex);
-                }
-                else if(stepInfo.stepType== StepTypes.Swap)
-                {
-                    treeNodeTarget.GetComponentInChildren<TextMesh>().color = new Color(0, 0.5f, 0);
-                }
-            }
         }
     }
+
+    //private void Move(StepInfo stepInfo)
+    //{
+    //    System.Collections.Generic.Queue<StepInfo> queue = this.stepQueue;
+
+    //    GameObject treeNodeTarget = stepInfo.treeNodeTarget;
+    //    GameObject treeNodeChild = stepInfo.treeNodeChild;
+    //    GameObject lineNodeTarget = stepInfo.lineNodeTarget;
+    //    GameObject lineNodeChild = stepInfo.lineNodeChild;
+
+    //    //stepInfo.passedInterval += Time.deltaTime;
+
+    //    if (treeNodeTarget == treeNodeChild) // not need to swap.
+    //    {
+    //        if (stepInfo.stepType == StepTypes.Swap)
+    //        {
+    //            throw new System.Exception("this should not happen.");
+    //        }
+    //        if (stepInfo.passedInterval < stepInfo.interval)
+    //        {
+    //            //{
+    //            //    Vector3 newPosition = stepInfo.treeNodeTargetPosition;
+    //            //    const float range = 0.1f;
+    //            //    newPosition.x += Random.Range(-range, range);
+    //            //    newPosition.y += Random.Range(-range, range);
+    //            //    newPosition.z += Random.Range(-range, range);
+    //            //    treeNodeTarget.transform.position = newPosition;
+    //            //}
+    //            //{
+    //            //    Vector3 newPosition = stepInfo.lineNodeTargetPosition;
+    //            //    const float range = 0.1f;
+    //            //    newPosition.x += Random.Range(-range, range);
+    //            //    newPosition.y += Random.Range(-range, range);
+    //            //    newPosition.z += Random.Range(-range, range);
+    //            //    lineNodeTarget.transform.position = newPosition;
+    //            //}
+    //        }
+    //        else
+    //        {
+    //            treeNodeTarget.transform.position = stepInfo.treeNodeTargetPosition;
+    //            lineNodeTarget.transform.position = stepInfo.lineNodeTargetPosition;
+    //            queue.Dequeue();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        //treeNodeTarget.transform.position = Vector3.Lerp(
+    //        //    stepInfo.treeNodeTargetPosition, stepInfo.treeNodeChildPosition, stepInfo.passedInterval / stepInfo.interval);
+    //        //treeNodeChild.transform.position = Vector3.Lerp(
+    //        //    stepInfo.treeNodeChildPosition, stepInfo.treeNodeTargetPosition, stepInfo.passedInterval / stepInfo.interval);
+    //        //lineNodeTarget.transform.position = Vector3.Lerp(
+    //        //    stepInfo.lineNodeTargetPosition, stepInfo.lineNodeChildPosition, stepInfo.passedInterval / stepInfo.interval);
+    //        //lineNodeChild.transform.position = Vector3.Lerp(
+    //        //    stepInfo.lineNodeChildPosition, stepInfo.lineNodeTargetPosition, stepInfo.passedInterval / stepInfo.interval);
+
+    //        if (stepInfo.passedInterval >= stepInfo.interval)
+    //        {
+    //            this.treeNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+    //            this.lineNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+    //            this.targetList.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
+
+    //            queue.Dequeue();
+
+    //            if (stepInfo.stepType == StepTypes.BuildSubHeap)
+    //            {
+    //                int targetIndex = stepInfo.childIndex;
+
+    //                AddStep4BuildSubHeap(targetIndex);
+    //            }
+    //            else if(stepInfo.stepType== StepTypes.Swap)
+    //            {
+    //                treeNodeTarget.GetComponentInChildren<TextMesh>().color = new Color(0, 0.5f, 0);
+    //            }
+    //        }
+    //    }
+    //}
 
     int GetSortedCount()
     {
