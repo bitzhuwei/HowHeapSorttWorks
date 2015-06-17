@@ -47,11 +47,11 @@ public class SortingManager : MonoBehaviour
         if (queue.Count > 0)
         {
             StepInfo stepInfo = queue.Peek();
-            BuildSubHeap(stepInfo);
+            Move(stepInfo);
         }
     }
 
-    private void BuildSubHeap(StepInfo stepInfo)
+    private void Move(StepInfo stepInfo)
     {
         System.Collections.Generic.Queue<StepInfo> queue = this.stepQueue;
 
@@ -110,26 +110,6 @@ public class SortingManager : MonoBehaviour
                 this.treeNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
                 this.lineNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
                 this.targetList.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
-                //{
-                //    System.Collections.Generic.List<GameObject> treeNodes = this.treeNodes;
-                //    GameObject tmp = treeNodes[stepInfo.targetIndex];
-                //    treeNodes[stepInfo.targetIndex] = treeNodes[stepInfo.childIndex];
-                //    treeNodes[stepInfo.childIndex] = tmp;
-                //}
-
-                //{
-                //    System.Collections.Generic.List<GameObject> lineNodes = this.lineNodes;
-                //    GameObject tmp = lineNodes[stepInfo.targetIndex];
-                //    lineNodes[stepInfo.targetIndex] = lineNodes[stepInfo.childIndex];
-                //    lineNodes[stepInfo.childIndex] = tmp;
-                //}
-
-                //{
-                //    System.Collections.Generic.List<int> targetList = this.targetList;
-                //    int tmp = targetList[stepInfo.targetIndex];
-                //    targetList[stepInfo.targetIndex] = targetList[stepInfo.childIndex];
-                //    targetList[stepInfo.childIndex] = tmp;
-                //}
 
                 queue.Dequeue();
 
