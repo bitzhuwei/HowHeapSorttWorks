@@ -47,6 +47,17 @@ public class SortingManager : MonoBehaviour
         if (queue.Count > 0)
         {
             StepInfo stepInfo = queue.Peek();
+            switch (stepInfo.stepType)
+            {
+                case StepTypes.Unknown:
+                    break;
+                case StepTypes.Swap:
+                    break;
+                case StepTypes.BuildSubHeap:
+                    break;
+                default:
+                    break;
+            }
             Move(stepInfo);
         }
     }
@@ -118,6 +129,10 @@ public class SortingManager : MonoBehaviour
                     int targetIndex = stepInfo.childIndex;
 
                     AddStep4BuildSubHeap(targetIndex);
+                }
+                else if(stepInfo.stepType== StepTypes.Swap)
+                {
+                    treeNodeTarget.GetComponentInChildren<TextMesh>().color = new Color(0, 0.5f, 0);
                 }
             }
         }
