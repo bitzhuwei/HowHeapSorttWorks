@@ -6,6 +6,8 @@ public class SortingManager : MonoBehaviour
     public System.Collections.Generic.List<int> targetList;
     public System.Collections.Generic.List<GameObject> lineNodes;
     public System.Collections.Generic.List<GameObject> treeNodes;
+    public bool stop = false;
+
     System.Collections.Generic.Queue<StepInfo> stepQueue;
 
     int currentStep = -1;
@@ -43,6 +45,8 @@ public class SortingManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (this.stop) { return; }
+
         System.Collections.Generic.Queue<StepInfo> queue = this.stepQueue;
         if (queue.Count > 0)
         {
