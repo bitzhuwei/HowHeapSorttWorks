@@ -7,6 +7,7 @@ using System.Collections;
 public class LineManager : MonoBehaviour {
 
     public Transform nodePrefab;
+    public UnityEngine.UI.InputField txtArray;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +17,8 @@ public class LineManager : MonoBehaviour {
             SortingManager managerScript = managerObj.GetComponent<SortingManager>();
 
             float now = Time.time;
+            System.Text.StringBuilder builder = new System.Text.StringBuilder();
+
             for (int index = 0; index < this.transform.childCount; index++)
             {
                 Transform child = this.transform.FindChild(index.ToString());
@@ -24,6 +27,7 @@ public class LineManager : MonoBehaviour {
                     if (int.TryParse(child.name, out index))
                     {
                         int number = Random.Range(0, 100);
+                        builder.Append(number);builder.Append(", ");
                         Transform lineNode = Instantiate(nodePrefab) as Transform;
                         lineNode.position = child.position;
                         lineNode.GetComponentInChildren<TextMesh>().text = number.ToString();
@@ -38,6 +42,8 @@ public class LineManager : MonoBehaviour {
                     }
                 }
             }
+
+            this.txtArray.text = builder.ToString();
         }
 	
 	}
