@@ -236,11 +236,7 @@ public class SortingManager : MonoBehaviour
         if (targetStep <= initializationSteps) { return 0; }
         if (targetStep > initializationSteps + swapSteps + buildSubHeapSteps) { return count; }
 
-        int sortedCount = (targetStep - initializationSteps) / 2;// -1;
-        if (sortedCount > 1)
-        {
-            System.Console.WriteLine("adf");
-        }
+        int sortedCount = (targetStep - initializationSteps) / 2;
 
         return sortedCount;
     }
@@ -342,5 +338,10 @@ public class SortingManager : MonoBehaviour
         { return "swap"; }
         else
         { return "build sub heap"; }
+    }
+
+    public void Reset()
+    {
+        this.targetStep = -1;
     }
 }

@@ -20,9 +20,13 @@ public class ShowButtonAtTime : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool shouldShow = this.showTime <= Time.time;
+        if(!shouldShow)
+        { this.done = false; }
+
         if (!done)
         {
-            if (showTime <= Time.time)
+            if (shouldShow)
             {
                 this.image.enabled = true;
                 this.text.enabled = true;

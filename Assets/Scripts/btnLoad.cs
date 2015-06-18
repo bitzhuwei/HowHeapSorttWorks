@@ -6,6 +6,8 @@ public class btnLoad : MonoBehaviour
     public Transform nodePrefab;
     public UnityEngine.UI.InputField txtArray;
     public UnityEngine.UI.Text txtArrayDataError;
+    public UnityEngine.UI.Text btnStepText;
+
     public Transform lineManager;
     public Transform treeManager;
     public float movingTimeFromLineNodeToTreeNode = 0.5f;
@@ -88,12 +90,22 @@ public class btnLoad : MonoBehaviour
         }
 
 
+        ShowButtonAtTime showAtTimeScrpt = this.btnStepText.GetComponentInParent<ShowButtonAtTime>();
+        if(showAtTimeScrpt==null)
+        { showAtTimeScrpt = this.btnStepText.transform.parent.gameObject.AddComponent<ShowButtonAtTime>(); }
+        showAtTimeScrpt.showTime = startTime;
+        showAtTimeScrpt.GetComponent<UnityEngine.UI.Image>().enabled = false;
+        this.btnStepText.enabled = false;
+
         this.sortingManager.targetList = targetList;
         this.sortingManager.lineNodes = lineNodes;
         this.sortingManager.treeNodes = treeNodes;
 
         this.done = true;
         this.sortingManager.stop = false;
+        this.sortingManager.Reset();
+        this.btnStepText.text = this.sortingManager.GetNextStepName();
+        
     }
 
     static readonly char[] separator = new char[] { ',', ' ' };
