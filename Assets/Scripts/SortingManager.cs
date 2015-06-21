@@ -71,7 +71,13 @@ public class SortingManager : MonoBehaviour
                             this.lineNodes.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
                             this.targetList.SwapElement(stepInfo.targetIndex, stepInfo.childIndex);
 
-                            stepInfo.treeNodeTarget.GetComponentInChildren<TextMesh>().color = new Color(0, 0.5f, 0);
+                            Color sortedColor = new Color(0, 0.5f, 0);
+                            stepInfo.treeNodeTarget.GetComponentInChildren<TextMesh>().color = sortedColor;
+                            TextMesh[] textMeshes = stepInfo.lineNodeTarget.GetComponentsInChildren<TextMesh>();
+                            foreach (var item in textMeshes)
+                            {
+                                item.color = sortedColor;
+                            }
                         }
                         else
                         {
