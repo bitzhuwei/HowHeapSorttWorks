@@ -39,14 +39,22 @@ public class CopyNodeAtStartUp : MonoBehaviour
                     treeNode.position = lineNode.transform.position;
                     treeNode.name = Names.GetTreeNodeName(index);
                     treeNode.renderer.material = lineNode.GetComponentInChildren<Renderer>().material;
+                    treeNode.renderer.enabled = false;
                     TextMesh textMesh = treeNode.GetComponentInChildren<TextMesh>();
                     textMesh.text = managerScript.targetList[index].ToString();
+                    textMesh.renderer.enabled = false;
 
-                    MoveInLine script = treeNode.gameObject.AddComponent<MoveInLine>();
-                    script.startTime = startTime;
-                    script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
-                    script.startPosition = lineNode.transform.position;
-                    script.endPosition = child.position;
+                    {
+                        DelayShow script = treeNode.gameObject.AddComponent<DelayShow>();
+                        script.showTime = managerScript.lineNodes[index].GetComponent<DelayShow>().showTime;
+                    }
+                    {
+                        MoveInLine script = treeNode.gameObject.AddComponent<MoveInLine>();
+                        script.startTime = startTime;
+                        script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
+                        script.startPosition = lineNode.transform.position;
+                        script.endPosition = child.position;
+                    }
 
                     startTime += movingTimeFromLineNodeToTreeNode;
 

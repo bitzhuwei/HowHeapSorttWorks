@@ -57,11 +57,6 @@ public class btnLoad : MonoBehaviour
                 {
                     Transform lineNode = Instantiate(indexNodePrefab) as Transform;
                     lineNode.position = child.position;
-                    //lineNode.GetComponentInChildren<TextMesh>().text = this.array[index].ToString();
-                    //lineNode.name = Names.GetLineNodeName(index);
-                    //lineNode.renderer.material = child.renderer.material;
-                    //lineNode.GetComponentInChildren<TextMesh>().renderer.enabled = false;
-                    //lineNode.renderer.enabled = false;
                     lineNode.name = Names.GetLineNodeName(index);
                     {
                         Transform valueNode = lineNode.Find("Value");
@@ -96,15 +91,39 @@ public class btnLoad : MonoBehaviour
             Transform child = this.treeManager.transform.FindChild(index.ToString());
             if (child != null)
             {
+                //string name = Names.GetLineNodeName(index);
+                //GameObject lineNode = lineNodes[index];// GameObject.Find(name);
+                //GameObject treeNode = Instantiate(lineNode) as GameObject;
+                //treeNode.name = Names.GetTreeNodeName(index);
+                //MoveInLine script = treeNode.AddComponent<MoveInLine>();
+                //script.startTime = startTime;
+                //script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
+                //script.startPosition = lineNode.transform.position;
+                //script.endPosition = child.position;
+                //
                 string name = Names.GetLineNodeName(index);
                 GameObject lineNode = lineNodes[index];// GameObject.Find(name);
-                GameObject treeNode = Instantiate(lineNode) as GameObject;
+                Transform treeNode = Instantiate(nodePrefab) as Transform;
+                treeNode.position = lineNode.transform.position;
                 treeNode.name = Names.GetTreeNodeName(index);
-                MoveInLine script = treeNode.AddComponent<MoveInLine>();
-                script.startTime = startTime;
-                script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
-                script.startPosition = lineNode.transform.position;
-                script.endPosition = child.position;
+                {
+                    treeNode.renderer.material = lineNode.GetComponentInChildren<Renderer>().material;
+                    treeNode.renderer.enabled = false;
+                    TextMesh textMesh = treeNode.GetComponentInChildren<TextMesh>();
+                    textMesh.text = targetList[index].ToString();
+                    textMesh.renderer.enabled = false;
+                }
+                {
+                    DelayShow script = treeNode.gameObject.AddComponent<DelayShow>();
+                    script.showTime = lineNode.GetComponent<DelayShow>().showTime;
+                }
+                {
+                    MoveInLine script = treeNode.gameObject.AddComponent<MoveInLine>();
+                    script.startTime = startTime;
+                    script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
+                    script.startPosition = treeNode.position;
+                    script.endPosition = child.position;
+                }
 
                 startTime += movingTimeFromLineNodeToTreeNode;
 
