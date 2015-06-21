@@ -7,6 +7,7 @@ using System.Collections;
 public class CopyNodeAtStartUp : MonoBehaviour
 {
     public GameObject stepButton;
+    public Transform nodePrefab;
 
     public float movingTimeFromLineNodeToTreeNode = 0.5f;
 
@@ -34,9 +35,14 @@ public class CopyNodeAtStartUp : MonoBehaviour
                 {
                     string name = Names.GetLineNodeName(index);
                     GameObject lineNode = managerScript.lineNodes[index];// GameObject.Find(name);
-                    GameObject treeNode = Instantiate(lineNode) as GameObject;
+                    Transform treeNode = Instantiate(nodePrefab) as Transform;
+                    treeNode.position = lineNode.transform.position;
                     treeNode.name = Names.GetTreeNodeName(index);
-                    MoveInLine script = treeNode.AddComponent<MoveInLine>();
+                    treeNode.renderer.material = lineNode.GetComponentInChildren<Renderer>().material;
+                    TextMesh textMesh = treeNode.GetComponentInChildren<TextMesh>();
+                    textMesh.text = managerScript.targetList[index].ToString();
+
+                    MoveInLine script = treeNode.gameObject.AddComponent<MoveInLine>();
                     script.startTime = startTime;
                     script.endTime = startTime + movingTimeFromLineNodeToTreeNode;
                     script.startPosition = lineNode.transform.position;

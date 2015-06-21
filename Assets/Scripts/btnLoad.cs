@@ -3,6 +3,7 @@ using System.Collections;
 
 public class btnLoad : MonoBehaviour
 {
+    public Transform indexNodePrefab;
     public Transform nodePrefab;
     public UnityEngine.UI.InputField txtArray;
     public UnityEngine.UI.Text txtArrayDataError;
@@ -23,6 +24,10 @@ public class btnLoad : MonoBehaviour
         if(array == null)
         {
             array = new System.Collections.Generic.List<int>();
+        }
+        for (int i = 0; i < 15; i++)
+        {
+
         }
     }
 
@@ -50,13 +55,31 @@ public class btnLoad : MonoBehaviour
             {
                 if (int.TryParse(child.name, out index))
                 {
-                    Transform lineNode = Instantiate(nodePrefab) as Transform;
+                    Transform lineNode = Instantiate(indexNodePrefab) as Transform;
                     lineNode.position = child.position;
-                    lineNode.GetComponentInChildren<TextMesh>().text = this.array[index].ToString();
+                    //lineNode.GetComponentInChildren<TextMesh>().text = this.array[index].ToString();
+                    //lineNode.name = Names.GetLineNodeName(index);
+                    //lineNode.renderer.material = child.renderer.material;
+                    //lineNode.GetComponentInChildren<TextMesh>().renderer.enabled = false;
+                    //lineNode.renderer.enabled = false;
                     lineNode.name = Names.GetLineNodeName(index);
-                    lineNode.renderer.material = child.renderer.material;
-                    lineNode.GetComponentInChildren<TextMesh>().renderer.enabled = false;
-                    lineNode.renderer.enabled = false;
+                    {
+                        Transform valueNode = lineNode.Find("Value");
+                        valueNode.renderer.material = child.renderer.material;
+                        valueNode.renderer.enabled = false;
+                        TextMesh textMesh = valueNode.GetComponentInChildren<TextMesh>();
+                        textMesh.text = this.array[index].ToString();
+                        textMesh.renderer.enabled = false;
+                    }
+                    {
+                        Transform indexNode = lineNode.Find("Index");
+                        indexNode.renderer.material = child.renderer.material;
+                        indexNode.renderer.enabled = false;
+                        TextMesh textMesh = indexNode.GetComponentInChildren<TextMesh>();
+                        textMesh.text = index.ToString();
+                        textMesh.renderer.enabled = false;
+                    }
+
                     DelayShow script = lineNode.gameObject.AddComponent<DelayShow>();
                     script.showTime = index / 2f + now;
                     lineNodes.Add(lineNode.gameObject);
